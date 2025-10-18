@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zuniverse SMP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: url("https://i.imgur.com/CeqXetR.jpeg") no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 20, 30, 0.7);
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(6px);
+    }
+
+    header img {
+      height: 55px;
+    }
+
+    .menu-icon {
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+      padding: 8px;
+      transition: transform 0.2s;
+    }
+
+    .menu-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .player-head {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: url('https://mc-heads.net/avatar/Steve') no-repeat center/cover;
+      margin-right: 15px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 110px 30px 90px;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      text-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+
+    .hero h2 {
+      font-weight: 400;
+      color: #cfe7ff;
+      margin-top: 8px;
+      font-size: 1.2rem;
+    }
+
+    .version-info {
+      margin: 30px auto;
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 20px 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .version-info:hover {
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+      transform: translateY(-3px);
+    }
+
+    .version-info h3 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .version-info p {
+      color: #dfe7f2;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-main {
+      background: #ffd84d;
+      color: #333;
+    }
+
+    .btn-main:hover {
+      background: #ffe580;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    section.info {
+      background: rgba(10,20,25,0.85);
+      backdrop-filter: blur(8px);
+      padding: 70px 30px;
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    section.info h2 {
+      font-size: 2rem;
+      color: #f4faff;
+      margin-bottom: 20px;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .socials img {
+      width: 40px;
+      filter: brightness(1.1);
+      transition: transform 0.3s;
+    }
+
+    .socials img:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* Popup input nama */
+    .name-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 30px 40px;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .popup-content h2 {
+      margin-bottom: 15px;
+    }
+
+    .popup-content input {
+      padding: 10px;
+      width: 250px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .popup-content button {
+      padding: 10px 25px;
+      background: #ffd84d;
+      color: #333;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Dropdown menu */
+    .menu-container {
+      position: relative;
+    }
+
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 60px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 10px 0;
+      min-width: 180px;
+      display: none;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .dropdown a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .version-info { width: 90%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://i.imgur.com/yadXSl4.png" alt="Zuniverse Logo">
+    <div style="display: flex; align-items: center; margin-left: auto;">
+      <div class="player-head" id="playerHead"></div>
+      <div class="menu-container">
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="dropdown" id="dropdownMenu">
+          <a href="index.html">🏠 Beranda</a>
+          <a href="store.html">🛒 Store</a>
+          <a href="wiki.html">📘 Wiki</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1 id="welcomeText">Selamat Datang di Zuniverse SMP</h1>
+    <h2>Bergabung dan rasakan petualanganmu!</h2>
+
+    <div class="version-info">
+      <h3>Informasi Versi Server</h3>
+      <p><strong>Java:</strong> 1.20.1 - 1.21+ <br>
+         <strong>Bedrock:</strong> 1.21.70 - 1.21.100+</p>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-main">Main Sekarang</button>
+      <button class="btn btn-secondary">Gabung Komunitas</button>
+    </div>
+  </section>
+
+  <section class="info">
+    <h2>Tentang Kami</h2>
+    <p>Zuniverse SMP adalah dunia survival Minecraft tempat para pemain berkumpul, membangun, dan menciptakan petualangan mereka sendiri.</p>
+
+    <div class="socials">
+      <img src="https://w7.pngwing.com/pngs/829/574/png-transparent-tiktok-hd-logo-thumbnail.png" alt="TikTok">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+    </div>
+
+    <footer>
+      © 2025 Zuniverse SMP | Semua hak dilindungi.
+    </footer>
+  </section>
+
+  <!-- Popup input nama -->
+  <div class="name-popup" id="namePopup">
+    <div class="popup-content">
+      <h2>Masukkan Nama Minecraft Kamu</h2>
+      <input type="text" id="playerName" placeholder="Contoh: ZuniverseID">
+      <br>
+      <button onclick="saveName()">Lanjut</button>
+    </div>
+  </div>
+
+  <script>
+    function saveName() {
+      const name = document.getElementById('playerName').value.trim();
+      if (name) {
+        localStorage.setItem('playerName', name);
+        document.getElementById('namePopup').style.display = 'none';
+        document.getElementById('welcomeText').innerText = `Selamat Datang, ${name}`;
+        document.getElementById('playerHead').style.backgroundImage = `url('https://mc-heads.net/avatar/${name}')`;
+      }
+    }
+
+    window.onload = () => {
+      const savedName = localStorage.getItem('playerName');
+      if (savedName) {
+        document.getElementById('namePopup').style.display = 'none';
+        document.getElementById('welcomeText').innerText = `Selamat Datang kembali, ${savedName}`;
+        document.getElementById('playerHead').style.backgroundImage = `url('https://mc-heads.net/avatar/${savedName}')`;
+      }
+    };
+
+    function toggleMenu() {
+      const menu = document.getElementById('dropdownMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    window.addEventListener('click', (e) => {
+      const menu = document.getElementById('dropdownMenu');
+      const icon = document.querySelector('.menu-icon');
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
